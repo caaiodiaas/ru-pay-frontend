@@ -5,6 +5,13 @@ import Clientes from '../../components/Clientes';
 
 function Cliente() {
 
+  const carteira ={
+    saldo : 0,
+    cliente:{
+      id:0
+    }
+  }
+
   const cliente ={
     login : "",
     senha : "",
@@ -45,6 +52,7 @@ function Cliente() {
       }else{
         setClientes([...clientes, retorno_convertido]);
         alert('Cliente cadastrado com sucesso!')
+
         limparCliente()
       }
     })

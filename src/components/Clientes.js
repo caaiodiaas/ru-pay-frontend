@@ -9,7 +9,8 @@ function Clientes({vetor, selecionar}){
                     <th>Senha</th>
                     <th>Email</th>
                     <th>Nome</th>
-                    <th>matrícula</th>
+                    <th>Matrícula</th>
+                    <th>Créditos</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,6 +23,7 @@ function Clientes({vetor, selecionar}){
                             <td>{obj.email}</td>
                             <td>{obj.nome}</td>
                             <td>{obj.matricula}</td>
+                            <td>{obj.carteira?.saldo}</td>
                             <td><button onClick={() => {selecionar(id)}} className="btn btn-success">Selecionar</button></td>
                         </tr>
                     ))

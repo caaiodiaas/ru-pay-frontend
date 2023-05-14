@@ -8,6 +8,7 @@ function CadastroCliente({cadastrar, eventoTeclado, cadastrarCliente, obj, cance
                 <input type='text' name='email' value={obj.email} onChange={eventoTeclado} placeholder="Email" className='form-control'></input>
                 <input type='text' name ='nome' value={obj.nome} onChange={eventoTeclado} placeholder="Nome" className='form-control'></input>
                 <input type='text' name ='matricula' value={obj.matricula} onChange={eventoTeclado} placeholder="Matrícula" className='form-control'></input>
+                <input type='text' name ='creditos' value={obj.carteira?.saldo} onChange={eventoTeclado} placeholder="Créditos" className='form-control'></input>
             </div>
             
             {
