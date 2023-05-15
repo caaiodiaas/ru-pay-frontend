@@ -5,9 +5,9 @@ import Refeicoes from '../../components/Refeicoes';
 
 function Cardapio() {
 
-  const refeicao ={
-    tipoRefeicao : 0,
-    data : '',
+  const refeicao = {
+    tipoRefeicao: 0,
+    data: '',
     valor: '',
     descricao: ''
   }
@@ -17,14 +17,14 @@ function Cardapio() {
   const [refeicoes, setRefeicoes] = useState([]);
   const [objRefeicao, setObjRefeicao] = useState(refeicao);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch("https://ru-pay-backend.up.railway.app/refeicao/listar")
-    .then(retorno => retorno.json())
-    .then(retorno_convertido => setRefeicoes(retorno_convertido))
+      .then(retorno => retorno.json())
+      .then(retorno_convertido => setRefeicoes(retorno_convertido))
   }, []);
 
   const aoDigitar = (e) => {
-    setObjRefeicao({...objRefeicao, [e.target.name]:e.target.value});
+    setObjRefeicao({ ...objRefeicao, [e.target.name]: e.target.value });
   }
 
   // Cadastrar Refeicao
@@ -32,21 +32,21 @@ function Cardapio() {
     fetch('https://ru-pay-backend.up.railway.app/refeicao/cadastrar', {
       method: 'post',
       body: JSON.stringify(objRefeicao),
-      headers:{
-        'Content-type':'application/json',
-        'Accept':'application/json'
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
       }
     })
-    .then(retorno => retorno.json())
-    .then(retorno_convertido => {
-      if(retorno_convertido.mensagem !== undefined){
-        alert(retorno_convertido.mensagem);
-      }else{
-        setRefeicoes([...refeicoes, retorno_convertido]);
-        alert('Refeição cadastrada com sucesso!')
-        limparRefeicao()
-      }
-    })
+      .then(retorno => retorno.json())
+      .then(retorno_convertido => {
+        if (retorno_convertido.mensagem !== undefined) {
+          alert(retorno_convertido.mensagem);
+        } else {
+          setRefeicoes([...refeicoes, retorno_convertido]);
+          alert('Refeição cadastrada com sucesso!')
+          limparRefeicao()
+        }
+      })
   }
 
   // Alterar Refeicao
@@ -54,44 +54,44 @@ function Cardapio() {
     fetch('https://ru-pay-backend.up.railway.app/refeicao/alterar', {
       method: 'put',
       body: JSON.stringify(objRefeicao),
-      headers:{
-        'Content-type':'application/json',
-        'Accept':'application/json'
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
       }
     })
-    .then(retorno => retorno.json())
-    .then(retorno_convertido => {
-      if(retorno_convertido.mensagem !== undefined){
-        alert(retorno_convertido.mensagem);
-      }else{
-        alert('Refeição alterada com sucesso!')
-        let vetorTemp = [...refeicoes];
+      .then(retorno => retorno.json())
+      .then(retorno_convertido => {
+        if (retorno_convertido.mensagem !== undefined) {
+          alert(retorno_convertido.mensagem);
+        } else {
+          alert('Refeição alterada com sucesso!')
+          let vetorTemp = [...refeicoes];
 
-        let indice = vetorTemp.findIndex((p)=>{
-          return p.id === objRefeicao.id;
-        })
-        vetorTemp[indice] = objRefeicao;
-        setRefeicoes(vetorTemp);
-        limparRefeicao()
-      }
-    })
-  }
-
-    // Remover Refeicao
-    const removerRefeicao = () => {
-      fetch('https://ru-pay-backend.up.railway.app/refeicao/remover/'+objRefeicao.id, {
-        method: 'delete',
-        headers:{
-          'Content-type':'application/json',
-          'Accept':'application/json'
+          let indice = vetorTemp.findIndex((p) => {
+            return p.id === objRefeicao.id;
+          })
+          vetorTemp[indice] = objRefeicao;
+          setRefeicoes(vetorTemp);
+          limparRefeicao()
         }
       })
+  }
+
+  // Remover Refeicao
+  const removerRefeicao = () => {
+    fetch('https://ru-pay-backend.up.railway.app/refeicao/remover/' + objRefeicao.id, {
+      method: 'delete',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
       .then(retorno => retorno.json())
       .then(retorno_convertido => {
         alert(retorno_convertido.mensagem)
         let vetorTemp = [...refeicoes];
 
-        let indice = vetorTemp.findIndex((p)=>{
+        let indice = vetorTemp.findIndex((p) => {
           return p.id === objRefeicao.id;
         })
         vetorTemp.splice(indice, 1);
@@ -99,7 +99,7 @@ function Cardapio() {
         limparRefeicao();
 
       })
-    }
+  }
 
   // Selecionar Refeicao
   const selecionarRefeicao = (id) => {
@@ -115,8 +115,9 @@ function Cardapio() {
 
   return (
     <div>
-      <CadastroRefeicao cadastrar={btnCadastrarRefeicao} eventoTeclado={aoDigitar} cadastrarRefeicao={cadastrarRefeicao} obj={objRefeicao} cancelar={limparRefeicao} remover={removerRefeicao} alterar={alterarRefeicao}/>
-      <Refeicoes vetor={refeicoes} selecionar={selecionarRefeicao}/>
+      <Refeicoes vetor={refeicoes} selecionar={selecionarRefeicao} />
+      <CadastroRefeicao cadastrar={btnCadastrarRefeicao} eventoTeclado={aoDigitar} cadastrarRefeicao={cadastrarRefeicao} obj={objRefeicao} cancelar={limparRefeicao} remover={removerRefeicao} alterar={alterarRefeicao} />
+
     </div>
   );
 }
