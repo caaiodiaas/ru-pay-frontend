@@ -5,19 +5,19 @@ import Clientes from '../../components/Clientes';
 
 function Cliente() {
 
-  const carteira ={
-    saldo : 0,
-    cliente:{
-      id:0
+  const carteira = {
+    saldo: 0,
+    cliente: {
+      id: 0
     }
   }
 
-  const cliente ={
-    login : "",
-    senha : "",
+  const cliente = {
+    login: "",
+    senha: "",
     email: "",
-    nome : "",
-    matricula : ""
+    nome: "",
+    matricula: ""
   }
 
   const [btnCadastrarCliente, setBtnCadastrarCliente] = useState(true);
@@ -25,14 +25,14 @@ function Cliente() {
   const [clientes, setClientes] = useState([]);
   const [objCliente, setObjCliente] = useState(cliente);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch("https://ru-pay-backend.up.railway.app/cliente/listar")
-    .then(retorno => retorno.json())
-    .then(retorno_convertido => setClientes(retorno_convertido))
+      .then(retorno => retorno.json())
+      .then(retorno_convertido => setClientes(retorno_convertido))
   }, []);
 
   const aoDigitar = (e) => {
-    setObjCliente({...objCliente, [e.target.name]:e.target.value});
+    setObjCliente({ ...objCliente, [e.target.name]: e.target.value });
   }
 
   // Cadastrar Cliente
@@ -40,22 +40,22 @@ function Cliente() {
     fetch('https://ru-pay-backend.up.railway.app/cliente/cadastrar', {
       method: 'post',
       body: JSON.stringify(objCliente),
-      headers:{
-        'Content-type':'application/json',
-        'Accept':'application/json'
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
       }
     })
-    .then(retorno => retorno.json())
-    .then(retorno_convertido => {
-      if(retorno_convertido.mensagem !== undefined){
-        alert(retorno_convertido.mensagem);
-      }else{
-        setClientes([...clientes, retorno_convertido]);
-        alert('Cliente cadastrado com sucesso!')
+      .then(retorno => retorno.json())
+      .then(retorno_convertido => {
+        if (retorno_convertido.mensagem !== undefined) {
+          alert(retorno_convertido.mensagem);
+        } else {
+          setClientes([...clientes, retorno_convertido]);
+          alert('Cliente cadastrado com sucesso!')
 
-        limparCliente()
-      }
-    })
+          limparCliente()
+        }
+      })
   }
 
   // Alterar Cliente
@@ -63,44 +63,44 @@ function Cliente() {
     fetch('https://ru-pay-backend.up.railway.app/cliente/alterar', {
       method: 'put',
       body: JSON.stringify(objCliente),
-      headers:{
-        'Content-type':'application/json',
-        'Accept':'application/json'
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
       }
     })
-    .then(retorno => retorno.json())
-    .then(retorno_convertido => {
-      if(retorno_convertido.mensagem !== undefined){
-        alert(retorno_convertido.mensagem);
-      }else{
-        alert('Cliente alterado com sucesso!')
-        let vetorTemp = [...clientes];
+      .then(retorno => retorno.json())
+      .then(retorno_convertido => {
+        if (retorno_convertido.mensagem !== undefined) {
+          alert(retorno_convertido.mensagem);
+        } else {
+          alert('Cliente alterado com sucesso!')
+          let vetorTemp = [...clientes];
 
-        let indice = vetorTemp.findIndex((p)=>{
-          return p.id === objCliente.id;
-        })
-        vetorTemp[indice] = objCliente;
-        setClientes(vetorTemp);
-        limparCliente()
-      }
-    })
-  }
-
-    // Remover Cliente
-    const removerCliente = () => {
-      fetch('https://ru-pay-backend.up.railway.app/cliente/remover/'+objCliente.id, {
-        method: 'delete',
-        headers:{
-          'Content-type':'application/json',
-          'Accept':'application/json'
+          let indice = vetorTemp.findIndex((p) => {
+            return p.id === objCliente.id;
+          })
+          vetorTemp[indice] = objCliente;
+          setClientes(vetorTemp);
+          limparCliente()
         }
       })
+  }
+
+  // Remover Cliente
+  const removerCliente = () => {
+    fetch('https://ru-pay-backend.up.railway.app/cliente/remover/' + objCliente.id, {
+      method: 'delete',
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
       .then(retorno => retorno.json())
       .then(retorno_convertido => {
         alert(retorno_convertido.mensagem)
         let vetorTemp = [...clientes];
 
-        let indice = vetorTemp.findIndex((p)=>{
+        let indice = vetorTemp.findIndex((p) => {
           return p.id === objCliente.id;
         })
         vetorTemp.splice(indice, 1);
@@ -108,7 +108,7 @@ function Cliente() {
         limparCliente();
 
       })
-    }
+  }
 
   // Selecionar Cliente
   const selecionarCliente = (id) => {
@@ -124,8 +124,10 @@ function Cliente() {
 
   return (
     <div>
-      <CadastroCliente cadastrar={btnCadastrarCliente} eventoTeclado={aoDigitar} cadastrarCliente={cadastrarCliente} obj={objCliente} cancelar={limparCliente} remover={removerCliente} alterar={alterarCliente}/>
-      <Clientes vetor={clientes} selecionar={selecionarCliente}/>
+
+      <Clientes vetor={clientes} selecionar={selecionarCliente} />
+      <CadastroCliente cadastrar={btnCadastrarCliente} eventoTeclado={aoDigitar} cadastrarCliente={cadastrarCliente} obj={objCliente} cancelar={limparCliente} remover={removerCliente} alterar={alterarCliente} />
+
     </div>
   );
 }
